@@ -1,0 +1,33 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack = []
+        num_temp = []
+        
+        for char in s:
+            if char == "]":
+                temp = []
+                while stack and stack[-1] != "[":
+                    temp.append(stack.pop())
+                
+                stack.pop() 
+                
+                fac = int(stack.pop())
+                
+                temp.reverse()
+                str_temp = "".join(temp)
+                fac_str = str_temp * fac
+                
+                stack.append(fac_str)
+                continue 
+            
+            if not ("0" <= char <= "9"):
+                
+                if num_temp:
+                    stack.append("".join(num_temp))
+                    num_temp = []
+                stack.append(char)
+                
+            elif "0" <= char <= "9":
+                num_temp.append(char)
+                
+        return "".join(stack)
